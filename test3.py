@@ -1,26 +1,38 @@
 from gpiozero import Button,LED
 from time import sleep
 
+dureeJaune=5
+dureeTemporisation=15
+
 button = Button(23)	
 
 ledVert = LED(17)
 ledJaune = LED(27)
 ledRouge = LED(22)
 
+def temporisation(ledDepart,ledJaune,letTemporisation,dureeJaune,dureeTemporisation):
 
-ledRouge.on()
+	ledDepart.on()
 
-while True:
-	button.wait_for_press()
-	ledRouge.off()
-	ledJaune.on()
-	sleep(5)
-	ledJaune.off()
-	ledVert.on()
-	sleep(30)
+	while True:
+		button.wait_for_press()
+		ledDepart.off()
+		ledJaune.on()
+		sleep(dureeJaune)
+		ledJaune.off()
+		letTemporisation.on()
+		sleep(dureeTemporisation)
+		letTemporisation.off()
+		ledDepart.on()
+
+
+def arret(ledVert,ledJaune,ledRouge):
 	ledVert.off()
-	ledRouge.on()
+	ledJaune.off()
+	ledRouge.off()
 
 
-ledRouge.off()
+temporisation(ledVert,ledJaune,ledRouge,dureeJaune,dureeTemporisation)
 
+
+arret(ledVert,ledJaune,ledRouge)
